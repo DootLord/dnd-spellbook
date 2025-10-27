@@ -83,7 +83,7 @@ function App({ spellData }: CardProps) {
             onContextMenu={handleRightClick}
             id={spellData.name}
         >
-            <img src={`/src/assets/cards/${spellData.name}.png`} alt={spellData.name} />
+            <img src={`/cards/${spellData.name}.png`} alt={spellData.name} />
             <div className="sheen"></div>
             <div className="stats" style={{ opacity: showStats ? 1 : 0 }}>
                 <h3>{spellData.name}</h3>
