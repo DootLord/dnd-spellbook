@@ -1,15 +1,22 @@
 import './App.css'
-import Card from './components/card/card'
 import spellsJSON from '../spells.json'
+import CardGrid from './components/card-grid/CardGrid'
 
 function App() {
-  const card = spellsJSON['acid-splash'];
+  const spellsJSONKeys = Object.keys(spellsJSON);
+
+  // Get ALL of the spell data using spellsJSONKeys
+  let cardData = [
+    ...spellsJSONKeys.map((key) => spellsJSON[key])
+  ]
 
   return (
     <>
-      <Card title={card.name} level={card.level} classes={card.classes} range={card.range} duration={card.duration} castingTime={card.casting_time} img={card.name}></Card>
+      <CardGrid columns={4} cards={cardData}></CardGrid>
     </>
   )
 }
 
 export default App
+export type spellsJSONType = typeof spellsJSON; // Move to types??
+export type spellsJSONDataType = typeof spellsJSON[keyof typeof spellsJSON]; // Move to types??

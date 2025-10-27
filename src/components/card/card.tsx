@@ -1,18 +1,13 @@
 import './card.scss'
 import { animate, stagger } from 'animejs'
 import { useRef, useState } from 'react'
+import { spellsJSONDataType } from '../../App';
 
 interface CardProps {
-    title: string;
-    level: number;
-    classes: string[];
-    range: string; // In ft
-    duration: string; // Number of hours
-    castingTime: string; // Number of actions
-    img: string;
+    spellData: spellsJSONDataType
 }
 
-function App(props: CardProps) {
+function App({ spellData }: CardProps) {
     const cardRef = useRef<HTMLDivElement>(null);
     const [showStats, setShowStats] = useState(false);
 
@@ -78,23 +73,25 @@ function App(props: CardProps) {
         }
     };
 
+    //TODO: Add "id" prop for unique identification
     return (
-        <div 
-            className="card" 
+        <div
+            className="card"
             ref={cardRef}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
             onContextMenu={handleRightClick}
+            id={spellData.name}
         >
-            <img src={`/src/assets/cards/${props.img}.png`} alt={props.title} />
+            <img src={`/src/assets/cards/${spellData.name}.png`} alt={spellData.name} />
             <div className="sheen"></div>
             <div className="stats" style={{ opacity: showStats ? 1 : 0 }}>
-                <h3>{props.title}</h3>
-                <p>Level: {props.level}</p>
-                <p>Classes: {props.classes.join(', ')}</p>
-                <p>Range: {props.range} ft</p>
-                <p>Duration: {props.duration} hours</p>
-                <p>Casting Time: {props.castingTime} actions</p>
+                <h3>{spellData.name}</h3>
+                <p>Level: {spellData.level}</p>
+                <p>Classes: {spellData.classes.join(', ')}</p>
+                <p>Range: {spellData.range} ft</p>
+                <p>Duration: {spellData.duration} hours</p>
+                <p>Casting Time: {spellData.casting_time} actions</p>
             </div>
         </div>
     )
