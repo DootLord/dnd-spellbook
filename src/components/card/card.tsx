@@ -6,9 +6,9 @@ interface CardProps {
     title: string;
     level: number;
     classes: string[];
-    range: number; // In ft
-    duration: number; // Number of hours
-    castingTime: number; // Number of actions
+    range: string; // In ft
+    duration: string; // Number of hours
+    castingTime: string; // Number of actions
     img: string;
 }
 

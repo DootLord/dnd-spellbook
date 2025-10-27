@@ -1,11 +1,13 @@
 import './App.css'
 import Card from './components/card/card'
+import spellsJSON from '../spells.json'
 
 function App() {
+  const card = spellsJSON['acid-splash'];
 
   return (
     <>
-      <Card title={'Acid Splash'} level={0} classes={["Wizard", "Sourcerer"]} range={60} duration={0} castingTime={1} img={'Acid Splash'}></Card>
+      <Card title={card.name} level={card.level} classes={card.classes} range={card.range} duration={card.duration} castingTime={card.casting_time} img={card.name}></Card>
     </>
   )
 }
