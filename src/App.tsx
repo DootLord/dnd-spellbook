@@ -6,9 +6,9 @@ import CardSearch from './components/search/card-search';
 
 export type spellsJSONDataType = typeof spellsJSON[keyof typeof spellsJSON];
 
-const spellsJSONKeys = Object.keys(spellsJSON);
+const spellsJSONKeys = Object.keys(spellsJSON) as (keyof typeof spellsJSON)[];
 const allSpells = [
-  ...spellsJSONKeys.map((key) => (spellsJSON as any)[key])
+  ...spellsJSONKeys.map((key) => (spellsJSON)[key])
 ];
 function App() {
 
