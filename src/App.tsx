@@ -1,32 +1,28 @@
 import './App.css'
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import spellsJSON from '../spells.json'
 import CardGrid from './components/card-grid/CardGrid'
 import CardSearch from './components/search/card-search';
 
 export type spellsJSONDataType = typeof spellsJSON[keyof typeof spellsJSON];
 
+const spellsJSONKeys = Object.keys(spellsJSON);
+const allSpells = [
+  ...spellsJSONKeys.map((key) => (spellsJSON as any)[key])
+];
 function App() {
-  const spellsJSONKeys = Object.keys(spellsJSON);
-  const allSpells = [
-    ...spellsJSONKeys.map((key) => (spellsJSON as any)[key])
-  ];
-  const [searchText, setSearchText] = useState("");
-  const [currentSpells, setCurrentSpells] = useState<spellsJSONDataType[]>([]);
 
-  useEffect(() => {
+  const [searchText, setSearchText] = useState("");
+
+  //? Learning note! useMemo is for derived values, useState is for values that can change indepenedantly
+  const currentSpells = useMemo(() => {
     if (searchText.trim() === "") {
-      setCurrentSpells(allSpells);
-      return;
+      return allSpells;
     }
 
-    const filteredSpells = [ //? Learning note: useMemo means we're only using it once!
-      ...spellsJSONKeys.map((key) => (spellsJSON as any)[key])
-    ].filter((spell) => {
+    return allSpells.filter((spell) => {
       return spell.name.toLowerCase().includes(searchText.toLowerCase())
     });
-
-    setCurrentSpells(filteredSpells);
   }, [searchText]);
 
 
