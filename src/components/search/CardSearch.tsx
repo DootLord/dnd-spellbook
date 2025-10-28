@@ -26,7 +26,7 @@ function CardSearch({ onSearchChange, onClassFilterChange, onSelectedLevelChange
     ]
 
     function handleClassFilterChange(
-        event: React.MouseEvent<HTMLElement>,
+        _event: React.MouseEvent<HTMLElement>,
         newClasses: string[],
     ) {
         setSelectedClasses(newClasses); // Update local state
@@ -34,7 +34,7 @@ function CardSearch({ onSearchChange, onClassFilterChange, onSelectedLevelChange
     }
 
     function handleLevelFilterChange(
-        event: React.MouseEvent<HTMLElement>,
+        _event: React.MouseEvent<HTMLElement>,
         newLevels: number[],
     ) {
         setSelectedLevels(newLevels); // Update local state
@@ -56,7 +56,7 @@ function CardSearch({ onSearchChange, onClassFilterChange, onSelectedLevelChange
                     margin: "8px"
                 }}
             />
-            
+
             <ToggleButtonGroup
                 className="class-filter-group"
                 sx={{
