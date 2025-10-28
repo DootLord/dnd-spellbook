@@ -11,32 +11,11 @@ function App({ spellData }: CardProps) {
     const cardRef = useRef<HTMLDivElement>(null);
     const [showStats, setShowStats] = useState(false);
 
-    function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
-        if (showStats) return;
-        if (!cardRef.current) return;
-        const card = cardRef.current;
-        const rect = card.getBoundingClientRect();
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        const mouseX = e.clientX - rect.left;
-        const mouseY = e.clientY - rect.top;
-        const rotateY = ((mouseX - centerX) / centerX) * 10; // Max 25 degrees
-        const rotateX = ((mouseY - centerY) / centerY) * 5;
-
-        animate(card, {
-            rotateX: rotateX,
-            rotateY: rotateY,
-            duration: 100,
-            easing: 'easeOutQuad'
-        });
-    };
-
     function handleMouseLeave() {
         if (showStats) return;
         if (!cardRef.current) return;
         animate(cardRef.current, {
-            rotateX: 0,
-            rotateY: 0,
+            scale: 1,
             duration: 300,
             easing: 'easeOutQuad'
         });
@@ -61,24 +40,25 @@ function App({ spellData }: CardProps) {
                 easing: 'easeOutQuad'
             });
         } else {
-            animate(statElements, {
-                translateY: [0, -20],
-                opacity: [1, 0],
-                delay: stagger(50),
-                duration: 200,
-                easing: 'easeOutQuad'
-            });
             animate(img, { opacity: 1, duration: 300, easing: 'easeOutQuad' });
-            animate(stats, { opacity: 0, duration: 300, delay: 200, easing: 'easeOutQuad' });
         }
     };
 
-    //TODO: Add "id" prop for unique identification
+    function handleMouseEnter() {
+        if (!cardRef.current) return;
+        const card = cardRef.current;
+        animate(card, {
+            scale: 1.05,
+            duration: 800,
+            ease: 'outElastic(1,0.3)',
+        });
+    }
+
     return (
         <div
             className="card"
             ref={cardRef}
-            onMouseMove={handleMouseMove}
+            onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             onContextMenu={handleRightClick}
             id={spellData.name}

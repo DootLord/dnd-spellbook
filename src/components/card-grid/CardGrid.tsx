@@ -12,8 +12,15 @@ interface CardGridProps {
 function CardGrid({ cards, columns }: CardGridProps) {
     const gridRef = useRef<HTMLDivElement>(null);
     const isFirstRender = useRef(true);
-    
+    // Store previous cards, to not reanimate if nothing actually changes
+    // DEVNOTE: useRef is for when I want a mutable value that persists across renders! Can't just declare a normal variable...
+    const cardsPrev = useRef<spellsJSONDataType[]>([]);
+
     useEffect(() => {
+        // No card changes, skip animations.
+        // Kinda lazy but it works...
+        if (cardsPrev.current.length === cards.length) return;
+
         if (gridRef.current) {
             const cardWrappers = gridRef.current.querySelectorAll('.card-wrapper');
             if (isFirstRender.current) {
@@ -40,6 +47,8 @@ function CardGrid({ cards, columns }: CardGridProps) {
                 });
             }
         }
+        
+        cardsPrev.current = cards;
     }, [cards]);
 
     const rows = Math.ceil(cards.length / columns);
@@ -54,13 +63,13 @@ function CardGrid({ cards, columns }: CardGridProps) {
     });
 
     return (
-        <div 
-            className="card-grid" 
+        <div
+            className="card-grid"
             ref={gridRef}
-            style={{ 
-                display: 'grid', 
-                gridTemplateColumns: `repeat(${columns}, 1fr)`, 
-                gap: '10px' 
+            style={{
+                display: 'grid',
+                gridTemplateColumns: `repeat(${columns}, 1fr)`,
+                gap: '10px'
             }}
         >
             {gridItems}
