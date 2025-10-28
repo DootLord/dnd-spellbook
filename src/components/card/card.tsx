@@ -7,7 +7,7 @@ interface CardProps {
     spellData: spellsJSONDataType
 }
 
-function App({ spellData }: CardProps) {
+function Card({ spellData }: CardProps) {
     const cardRef = useRef<HTMLDivElement>(null);
     const [showStats, setShowStats] = useState(false);
 
@@ -83,4 +83,4 @@ function App({ spellData }: CardProps) {
     )
 }
 
-export default App
+export default Card
