@@ -69,9 +69,9 @@ function App({ spellData }: CardProps) {
                 <h3>{spellData.name}</h3>
                 <p>Level: {spellData.level}</p>
                 <p>Classes: {spellData.classes.join(', ')}</p>
-                <p>Range: {spellData.range} ft</p>
-                <p>Duration: {spellData.duration} hours</p>
-                <p>Casting Time: {spellData.casting_time} actions</p>
+                <p>Range: {spellData.range}</p>
+                <p>Duration: {spellData.duration}</p>
+                <p>Casting Time: {spellData.casting_time}</p>
             </div>
         </div>
     )
