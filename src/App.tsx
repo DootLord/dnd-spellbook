@@ -1,4 +1,5 @@
 import './App.css'
+
 import { useMemo, useState } from 'react'
 import spellsJSON from '../spells.json'
 import CardGrid from './components/card-grid/CardGrid'

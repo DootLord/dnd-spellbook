@@ -11,15 +11,26 @@ function App({ spellData }: CardProps) {
     const cardRef = useRef<HTMLDivElement>(null);
     const [showStats, setShowStats] = useState(false);
 
+    function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
+        if (showStats || !cardRef.current) return;
+
+        const card = cardRef.current;
+        const rect = card.getBoundingClientRect();
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+
+        const rotateY = ((mouseX - centerX) / centerX) * 20; // Max 20 degrees
+        const rotateX = ((mouseY - centerY) / centerY) * 10; // Max 10 degrees
+
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    }
+
     function handleMouseLeave() {
-        if (showStats) return;
-        if (!cardRef.current) return;
-        animate(cardRef.current, {
-            scale: 1,
-            duration: 300,
-            easing: 'easeOutQuad'
-        });
-    };
+        if (showStats || !cardRef.current) return;
+        cardRef.current.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+    }
 
     function handleRightClick(e: React.MouseEvent<HTMLDivElement>) {
         e.preventDefault();
@@ -44,27 +55,17 @@ function App({ spellData }: CardProps) {
         }
     };
 
-    function handleMouseEnter() {
-        if (!cardRef.current) return;
-        const card = cardRef.current;
-        animate(card, {
-            scale: 1.05,
-            duration: 800,
-            ease: 'outElastic(1,0.3)',
-        });
-    }
-
     return (
         <div
             className="card"
             ref={cardRef}
-            onMouseEnter={handleMouseEnter}
+            onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
             onContextMenu={handleRightClick}
             id={spellData.name}
         >
-            <img 
-                src={`/cards/${spellData.name}.png`} 
+            <img
+                src={`/cards/${spellData.name}.png`}
                 alt={spellData.name}
                 loading="lazy"
                 decoding="async"
